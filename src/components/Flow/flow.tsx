@@ -1,10 +1,10 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useNodes } from "@/stores/nodes";
+import { useCallback, useMemo } from "react";
 import ReactFlow, {
   Background,
-  Edge,
-  Node,
+  Controls,
   OnConnect,
   OnEdgesChange,
   OnNodesChange,
@@ -14,46 +14,49 @@ import ReactFlow, {
 } from "reactflow";
 
 import "reactflow/dist/style.css";
+import { DateNode } from "..";
 
-export function Flow({
-  nodes: initNodes,
-  edges: initEdges,
-}: {
-  nodes: Node[];
-  edges: Edge[];
-}) {
-  const [nodes, setNodes] = useState<Node[]>(initNodes);
-  const [edges, setEdges] = useState<Edge[]>(initEdges);
+export function Flow() {
+  const [nodes, edges, setNodes, setEdges] = useNodes((state) => [
+    state.nodes,
+    state.edges,
+    state.setNodes,
+    state.setEdges,
+  ]);
+
+  const nodeTypes = useMemo(() => ({ date: DateNode }), []);
 
   const onNodesChange: OnNodesChange = useCallback(
     (chs) => {
-      setNodes((nds) => applyNodeChanges(chs, nds));
+      setNodes(applyNodeChanges(chs, nodes));
     },
-    [setNodes]
+    [nodes, setNodes]
   );
 
   const onEdgesChange: OnEdgesChange = useCallback(
     (chs) => {
-      setEdges((eds) => applyEdgeChanges(chs, eds));
+      setEdges(applyEdgeChanges(chs, edges));
     },
-    [setEdges]
+    [edges, setEdges]
   );
 
   const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    [setEdges]
+    (params) => setEdges(addEdge(params, edges)),
+    [edges, setEdges]
   );
 
   return (
-    <div style={{ width: "100vw", height: "100vh" }}>
+    <div className="w-full h-full">
       <ReactFlow
         nodes={nodes}
         edges={edges}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
       >
         <Background color="#aaa" gap={16} />
+        <Controls />
       </ReactFlow>
     </div>
   );

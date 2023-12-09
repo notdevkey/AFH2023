@@ -1,5 +1,9 @@
 import Link from "next/link";
 
 export default function Home() {
-  return <Link href="/dashboard">Go to dashboard</Link>;
+  return (
+    <Link className="font-bold" href="/dashboard">
+      Go to dashboard
+    </Link>
+  );
 }
