@@ -4,6 +4,7 @@ import { useNodes } from "@/stores/nodes";
 import { useCallback, useMemo } from "react";
 import ReactFlow, {
   Background,
+  Connection,
   Controls,
   OnConnect,
   OnEdgesChange,
@@ -13,10 +14,19 @@ import ReactFlow, {
   applyNodeChanges,
 } from "reactflow";
 
+import { useControlPanel } from "@/stores/controls";
 import "reactflow/dist/style.css";
-import { DateNode } from "..";
+import {
+  DateNode,
+  InputNode,
+  NordpoolNode,
+  OutputNode,
+  RelayNode,
+  TemperatureNode,
+} from "..";
 
 export function Flow() {
+  const [selectControl] = useControlPanel((state) => [state.selectedControl]);
   const [nodes, edges, setNodes, setEdges] = useNodes((state) => [
     state.nodes,
     state.edges,
@@ -24,7 +34,26 @@ export function Flow() {
     state.setEdges,
   ]);
 
-  const nodeTypes = useMemo(() => ({ date: DateNode }), []);
+  const getElectricityEdge = useCallback(
+    (params: Connection) => ({
+      ...params,
+      animated: true,
+      style: { stroke: "#0083ff" },
+    }),
+    []
+  );
+
+  const nodeTypes = useMemo(
+    () => ({
+      date: DateNode,
+      nordpool: NordpoolNode,
+      temperature: TemperatureNode,
+      relay: RelayNode,
+      input: InputNode,
+      output: OutputNode,
+    }),
+    []
+  );
 
   const onNodesChange: OnNodesChange = useCallback(
     (chs) => {
@@ -41,12 +70,23 @@ export function Flow() {
   );
 
   const onConnect: OnConnect = useCallback(
-    (params) => setEdges(addEdge(params, edges)),
-    [edges, setEdges]
+    (params) => {
+      const sourceNode = nodes.find((node) => node.id === params.source);
+      console.log(sourceNode, "SOURCE NODE");
+      setEdges(
+        addEdge(
+          sourceNode?.data.nodeType === "io" || sourceNode?.data.flowThrough
+            ? getElectricityEdge(params)
+            : params,
+          edges
+        )
+      );
+    },
+    [edges, getElectricityEdge, nodes, setEdges]
   );
 
   return (
-    <div className="w-full h-full">
+    <div className="relative w-full h-full">
       <ReactFlow
         nodes={nodes}
         edges={edges}
@@ -55,6 +95,7 @@ export function Flow() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
       >
+        {/* {selectControl && } */}
         <Background color="#aaa" gap={16} />
         <Controls />
       </ReactFlow>

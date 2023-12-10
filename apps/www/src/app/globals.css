@@ -80,3 +80,7 @@
   background: green;
   fill: green;
 }
+
+.custom-edge {
+  stroke: blue;
+}
