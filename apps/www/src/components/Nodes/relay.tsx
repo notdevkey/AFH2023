@@ -1,6 +1,6 @@
 import { useControlPanel } from "@/stores/controls";
 import { useNodes } from "@/stores/nodes";
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { Handle, NodeProps, Position } from "reactflow";
 import { Popover } from "..";
 import { Dialog, DialogTrigger } from "../ui/dialog";
@@ -14,10 +14,9 @@ export function RelayNode({ isConnectable, data, id }: NodeProps) {
     state.setSelectedControl,
   ]);
   const [action, setAction] = useState<"GT" | "LT" | "EQ">();
-  const [nodes, setNodes] = useNodes((state) => [state.nodes, state.setNodes]);
-  const currentNode = nodes.find((node) => node.id === id);
+  const [nodes] = useNodes((state) => [state.nodes, state.setNodes]);
 
-  const handleValueChange = (e) => {
+  const handleValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === "number") {
       setComparisonValue(Number(e.target.value));
     } else if (e.target.type === "date") {

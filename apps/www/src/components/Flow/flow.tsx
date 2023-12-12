@@ -14,7 +14,6 @@ import ReactFlow, {
   applyNodeChanges,
 } from "reactflow";
 
-import { useControlPanel } from "@/stores/controls";
 import "reactflow/dist/style.css";
 import {
   DateNode,
@@ -26,7 +25,6 @@ import {
 } from "..";
 
 export function Flow() {
-  const [selectControl] = useControlPanel((state) => [state.selectedControl]);
   const [nodes, edges, setNodes, setEdges] = useNodes((state) => [
     state.nodes,
     state.edges,
@@ -95,7 +93,6 @@ export function Flow() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
       >
-        {/* {selectControl && } */}
         <Background color="#aaa" gap={16} />
         <Controls />
       </ReactFlow>
