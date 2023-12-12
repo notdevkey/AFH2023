@@ -1,8 +1,8 @@
 import asyncio
+from datetime import datetime
+import json
 from fastapi import FastAPI, WebSocket
 from nordpool import elspot, elbas
-import json
-from datetime import datetime
 
 app = FastAPI()
 
@@ -29,10 +29,11 @@ async def send_prices(websocket: WebSocket):
     Utility function for sending the prices using WebSockets
     """
     while True:
-        prices = prices_spot.hourly(areas=["LV"])  # Fetch NordPool prices
+        prices = prices_spot.daily(areas=["LV"])  # Fetch NordPool prices
         json_prices = json.dumps(
             prices, cls=DateTimeEncoder
         )  # Convert prices to JSON format using custom encoder
+        print(prices.values)
         await websocket.send_text(json_prices)  # Send JSON data to WebSocket client
         await asyncio.sleep(60)  # Wait for 60 seconds before sending the next update
 

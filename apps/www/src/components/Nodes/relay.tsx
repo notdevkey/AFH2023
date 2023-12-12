@@ -71,11 +71,7 @@ export function RelayNode({ isConnectable, data, id }: NodeProps) {
         </DialogTrigger>
         <Popover title="Edit relay">
           <Label className="text-sm">Continue if</Label>
-          <div className="px-3 py-1">
-            {data.valueType === "date"
-              ? (data.connectedValue as Date).toUTCString()
-              : data.connectedValue}
-          </div>
+          <h1 className="px-5 py-2 rounded-xl bg-gray-50">Connected Date</h1>
 
           <Label className="text-sm">Is</Label>
           <select

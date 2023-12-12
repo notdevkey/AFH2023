@@ -7,7 +7,6 @@ export function TemperatureNode({ data }: NodeProps) {
     const tempInterval = setInterval(() => {
       const randomValue = Math.round(Math.random() * 200);
       setTemp(randomValue);
-      data.onValueChange(randomValue);
     }, 1000);
 
     return () => {

@@ -50,8 +50,6 @@ export function NordpoolNode() {
   const [socketUrl] = useState("ws://localhost:8000/ws");
   const [data, setData] = useState<HourlyPrice[]>([]);
 
-  console.log(data, "CHART DATA");
-
   const chartData = useMemo(
     () => ({
       labels: data.map((data) => data.date),
@@ -69,9 +67,11 @@ export function NordpoolNode() {
   );
 
   const { lastJsonMessage, readyState } = useWebSocket<Prices>(socketUrl);
+  console.log(lastJsonMessage, "LAST");
 
   useEffect(() => {
-    if (lastJsonMessage !== null) {
+    if (lastJsonMessage?.areas) {
+      console.log(lastJsonMessage, "MESSAGE");
       const lvValues = lastJsonMessage.areas.LV.values;
 
       // Transforming the LV values into the required format for react-charts

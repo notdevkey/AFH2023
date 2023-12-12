@@ -1,12 +1,4 @@
-import { nanoid } from "nanoid";
-import {
-  Edge,
-  EdgeChange,
-  Node,
-  NodeChange,
-  applyEdgeChanges,
-  applyNodeChanges,
-} from "reactflow";
+import { Edge, Node } from "reactflow";
 import { create } from "zustand";
 
 export const nodeSize = {
@@ -61,31 +53,23 @@ type CustomNodeType<T = Data, U extends NodeFunction = NodeFunction> = Node<
 interface NodeState {
   nodes: Node[];
   edges: Edge[];
-  onNodesChange: (nodes: NodeChange[]) => void;
-  onEdgesChange: (edges: EdgeChange[]) => void;
-  addEdge: (edge: Edge) => void;
+  setNodes(nodes: Node[]): void;
+  setEdges: (edges: Edge[]) => void;
 }
 
-export const useReactFlowStore = create<NodeState>()((set, get) => ({
+export const useNodes = create<NodeState>()((set, get) => ({
   nodes: initialNodes,
   edges: initialEdges,
 
-  onNodesChange(changes) {
+  setNodes(nodes) {
     set({
-      nodes: applyNodeChanges(changes, get().nodes),
+      nodes,
     });
   },
 
-  onEdgesChange(changes) {
+  setEdges(edges) {
     set({
-      edges: applyEdgeChanges(changes, get().edges),
+      edges,
     });
-  },
-
-  addEdge(data) {
-    const id = nanoid(6);
-    const edge = { ...data, id };
-
-    set({ edges: [edge, ...get().edges] });
   },
 }));

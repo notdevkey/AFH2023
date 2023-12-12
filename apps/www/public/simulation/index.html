@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+<title>Real time monitoring - savesome.eu</title>
+<link rel="stylesheet" type="text/css" href="design/default.css">
+<script src="scripts/jquery-3.7.1.min.js.js" type="text/javascript"></script>
+<script src="scripts/simulation.js" type="text/javascript"></script>
+<body>
+    <div class="monitoring-wrapper">
+        <div class="monitoring">
+            <div class="energy-hub m-flex">
+                <div class="m-icon energy-hub"></div>
+                <div class="m-title">Energy hub</div>
+                <div class="m-row m-row-title m-small-text">
+                    <div class="m-text">Produced</div>
+                    <div class="m-text">Used</div>
+                    <div class="m-text">&nbsp;</div>
+                </div>
+                <div class="m-row m-row-value">
+                    <div class="m-text">
+                        <span id="produced" class="m-number m-bold">0</span> <span class="m-small-text">MW</span>
+                    </div>
+                    <div class="m-text">
+                        <span id="used" class="m-number m-bold">0</span> <span class="m-small-text">MW</span>
+                    </div>
+                    <div class="m-text">
+                        <span id="energyTotal" class="m-number m-bold">0</span> <span class="m-small-text">MW</span>
+                    </div>
+                </div>
+                <div class="m-row m-row-title m-small-text">
+                    <div class="m-text">Income</div>
+                    <div class="m-text">Expenses</div>
+                </div>
+                <div class="m-row m-row-value">
+                    <div class="m-text">
+                        <span id="income" class="m-number m-bold">0</span> <span class="m-small-text">EUR</span>
+                    </div>
+                    <div class="m-text">
+                        <span id="expenses" class="m-number m-bold">0</span> <span class="m-small-text">EUR</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="solar-panels m-flex">
+                <div class="m-icon solar-panels"></div>
+                <div class="m-title">Solar panels</div>
+                <div class="m-title"><span id="solar">0</span> MW</div>
+            </div>
+            <div class="pipe solar"></div>
+
+            <div class="wind-turbines m-flex">
+                <div class="m-icon wind-turbines"></div>
+                <div class="m-title">Wind turbines</div>
+                <div class="m-title"><span id="wind">0</span> MW</div>
+            </div>
+            <div class="pipe wind"></div>
+
+            <div class="crane m-flex">
+                <div class="m-icon m-icon-small crane"></div>
+                <div class="m-title">Crane</div>
+                <div class="m-title"><span id="crane">0</span> MW</div>
+            </div>
+            <div class="pipe crane"></div>
+
+            <div class="e-fleet m-flex">
+                <div class="m-icon m-icon-small e-fleet"></div>
+                <div class="m-title">E - fleet</div>
+                <div class="m-title"><span id="trucks">0</span> MW</div>
+            </div>
+            <div class="pipe e-fleet"></div>
+
+            <div class="office m-flex">
+                <div class="m-icon m-icon-small office"></div>
+                <div class="m-title">Office</div>
+                <div class="m-title"><span id="office">0</span> MW</div>
+            </div>
+            <div class="pipe office"></div>
+
+        </div>
+    </div>
+    <script>
+        let simulationObject = new Simulation();
+        simulationObject.initialize();
+    </script>
+</body>
