@@ -2,6 +2,8 @@
 
 🥉**3rd place in Alternative Fuels hackathon 2023**
 
+![image](https://github.com/notdevkey/AFH2023/assets/66126144/424ced5a-2757-440b-86e2-293d22753ee0)
+
 A standard that finally lets you act upon the data and analytics from energy consumption that comes from different IoT hardware integrations, NordPool, and more. Build advanced action flows and have complete control over energy automation for any device, and get health reports and suggestions for your system.
 
 ## Running the project
