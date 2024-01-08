@@ -1,5 +1,7 @@
 # SaveSome
 
+🥉3rd place in Alternative Fuels hackathon 2023
+
 A standard that finally lets you act upon the data and analytics from energy consumption that comes from different IoT hardware integrations, NordPool, and more. Build advanced action flows and have complete control over energy automation for any device, and get health reports and suggestions for your system.
 
 ## Running the project
